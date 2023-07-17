@@ -18,7 +18,7 @@ public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceO
     private final StorageRepository storageRepository;
 
     @Override
-    public ChangeStoragePriceResponse changePrice(ChangeStoragePriceRequest request) {
+    public ChangeStoragePriceResponse process(ChangeStoragePriceRequest request) {
         ItemStorage foundInRepo = findById(request.getId());
 
         foundInRepo.setPrice(request.getPrice());

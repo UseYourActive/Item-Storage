@@ -14,11 +14,11 @@ public class RegisterNewItemOperationProcessor implements RegisterNewItemOperati
     private final StorageRepository storageRepository;
 
     @Override
-    public RegisterNewItemResponse registerNewItem(RegisterNewItemRequest request) {
+    public RegisterNewItemResponse process(RegisterNewItemRequest registerNewItemRequest) {
         ItemStorage item = ItemStorage.builder()
-                .item_id(request.getId())
-                .price(request.getPrice())
-                .quantity(request.getQuantity())
+                .item_id(registerNewItemRequest.getId())
+                .price(registerNewItemRequest.getPrice())
+                .quantity(registerNewItemRequest.getQuantity())
                 .build();
 
         ItemStorage save = storageRepository.save(item);

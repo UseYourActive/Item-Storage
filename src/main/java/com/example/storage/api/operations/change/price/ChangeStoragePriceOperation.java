@@ -1,5 +1,6 @@
 package com.example.storage.api.operations.change.price;
 
-public interface ChangeStoragePriceOperation {
-    ChangeStoragePriceResponse changePrice(ChangeStoragePriceRequest request);
+import com.example.storage.api.base.OperationProcessor;
+
+public interface ChangeStoragePriceOperation extends OperationProcessor<ChangeStoragePriceResponse, ChangeStoragePriceRequest> {
 }

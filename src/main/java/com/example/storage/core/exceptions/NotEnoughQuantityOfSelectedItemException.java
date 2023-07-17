@@ -1,4 +1,4 @@
 package com.example.storage.core.exceptions;
 
-public class NotEnoughQuantityOfSelectedItemException extends Exception{
+public class NotEnoughQuantityOfSelectedItemException extends RuntimeException{
 }

@@ -19,14 +19,14 @@ public class ExportStorageOperationProcessor implements ExportStorageOperation {
     private final StorageRepository storageRepository;
 
     @Override
-    public ExportStorageResponse exportItem(ExportStorageRequest request) throws NotEnoughQuantityOfSelectedItemException {
-        ItemStorage foundInRepo = findById(request.getId());
+    public ExportStorageResponse process(ExportStorageRequest exportStorageRequest) {
+        ItemStorage foundInRepo = findById(exportStorageRequest.getId());
 
-        if(foundInRepo.getQuantity() < request.getQuantity()){
+        if(foundInRepo.getQuantity() < exportStorageRequest.getQuantity()){
             throw new NotEnoughQuantityOfSelectedItemException();
         }
 
-        foundInRepo.setQuantity(foundInRepo.getQuantity() - request.getQuantity());
+        foundInRepo.setQuantity(foundInRepo.getQuantity() - exportStorageRequest.getQuantity());
 
         ItemStorage save = storageRepository.save(foundInRepo);
 

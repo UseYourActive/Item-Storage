@@ -18,10 +18,10 @@ public class ImportStorageOperationProcessor implements ImportStorageOperation {
     private final StorageRepository storageRepository;
 
     @Override
-    public ImportStorageResponse importItem(ImportStorageRequest request) {
-        ItemStorage foundInRepo = findById(request.getId());
+    public ImportStorageResponse process(ImportStorageRequest importStorageRequest) {
+        ItemStorage foundInRepo = findById(importStorageRequest.getId());
 
-        foundInRepo.setQuantity(request.getQuantity() + foundInRepo.getQuantity());
+        foundInRepo.setQuantity(importStorageRequest.getQuantity() + foundInRepo.getQuantity());
 
         ItemStorage save = storageRepository.save(foundInRepo);
 
