@@ -1,16 +1,16 @@
-package com.example.storage.services;
+package com.example.storage.core.processors;
 
 import com.example.storage.api.operations.register.RegisterNewItemRequest;
 import com.example.storage.api.operations.register.RegisterNewItemResponse;
-import com.example.storage.api.operations.register.RegisterNewItemService;
-import com.example.storage.data.entities.ItemStorage;
-import com.example.storage.data.repositories.StorageRepository;
+import com.example.storage.api.operations.register.RegisterNewItemOperation;
+import com.example.storage.persistence.entities.ItemStorage;
+import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class RegisterNewItemServiceImpl implements RegisterNewItemService {
+public class RegisterNewItemOperationProcessor implements RegisterNewItemOperation {
     private final StorageRepository storageRepository;
 
     @Override

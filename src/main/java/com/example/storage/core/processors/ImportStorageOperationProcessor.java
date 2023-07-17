@@ -1,10 +1,10 @@
-package com.example.storage.services;
+package com.example.storage.core.processors;
 
 import com.example.storage.api.operations.importing.ImportStorageRequest;
 import com.example.storage.api.operations.importing.ImportStorageResponse;
-import com.example.storage.api.operations.importing.ImportStorageService;
-import com.example.storage.data.entities.ItemStorage;
-import com.example.storage.data.repositories.StorageRepository;
+import com.example.storage.api.operations.importing.ImportStorageOperation;
+import com.example.storage.persistence.entities.ItemStorage;
+import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class ImportStorageServiceImpl implements ImportStorageService {
+public class ImportStorageOperationProcessor implements ImportStorageOperation {
     private final StorageRepository storageRepository;
 
     @Override

@@ -1,11 +1,11 @@
-package com.example.storage.services;
+package com.example.storage.core.processors;
 
 import com.example.storage.api.operations.export.ExportStorageRequest;
 import com.example.storage.api.operations.export.ExportStorageResponse;
-import com.example.storage.api.operations.export.ExportStorageService;
-import com.example.storage.data.entities.ItemStorage;
-import com.example.storage.data.repositories.StorageRepository;
-import com.example.storage.exceptions.NotEnoughQuantityOfSelectedItemException;
+import com.example.storage.api.operations.export.ExportStorageOperation;
+import com.example.storage.persistence.entities.ItemStorage;
+import com.example.storage.persistence.repositories.StorageRepository;
+import com.example.storage.core.exceptions.NotEnoughQuantityOfSelectedItemException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class ExportStorageServiceImpl implements ExportStorageService {
+public class ExportStorageOperationProcessor implements ExportStorageOperation {
     private final StorageRepository storageRepository;
 
     @Override

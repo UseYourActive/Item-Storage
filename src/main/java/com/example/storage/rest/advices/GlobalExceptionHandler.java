@@ -1,6 +1,6 @@
-package com.example.storage;
+package com.example.storage.rest.advices;
 
-import com.example.storage.exceptions.NotEnoughQuantityOfSelectedItemException;
+import com.example.storage.core.exceptions.NotEnoughQuantityOfSelectedItemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

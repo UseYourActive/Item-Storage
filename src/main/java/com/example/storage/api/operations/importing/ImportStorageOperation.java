@@ -1,5 +1,5 @@
 package com.example.storage.api.operations.importing;
 
-public interface ImportStorageService {
+public interface ImportStorageOperation {
     ImportStorageResponse importItem(ImportStorageRequest request);
 }

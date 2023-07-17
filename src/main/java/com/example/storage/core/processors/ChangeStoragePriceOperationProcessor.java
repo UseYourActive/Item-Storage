@@ -1,10 +1,10 @@
-package com.example.storage.services;
+package com.example.storage.core.processors;
 
 import com.example.storage.api.operations.change.price.ChangeStoragePriceRequest;
 import com.example.storage.api.operations.change.price.ChangeStoragePriceResponse;
-import com.example.storage.api.operations.change.price.ChangeStoragePriceService;
-import com.example.storage.data.entities.ItemStorage;
-import com.example.storage.data.repositories.StorageRepository;
+import com.example.storage.api.operations.change.price.ChangeStoragePriceOperation;
+import com.example.storage.persistence.entities.ItemStorage;
+import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class ChangeStoragePriceImpl implements ChangeStoragePriceService {
+public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceOperation {
     private final StorageRepository storageRepository;
 
     @Override

@@ -1,6 +1,6 @@
-package com.example.storage.data.repositories;
+package com.example.storage.persistence.repositories;
 
-import com.example.storage.data.entities.ItemStorage;
+import com.example.storage.persistence.entities.ItemStorage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

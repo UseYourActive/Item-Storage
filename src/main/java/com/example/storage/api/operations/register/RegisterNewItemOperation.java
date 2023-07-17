@@ -1,5 +1,5 @@
 package com.example.storage.api.operations.register;
 
-public interface RegisterNewItemService {
+public interface RegisterNewItemOperation {
     RegisterNewItemResponse registerNewItem(RegisterNewItemRequest request);
 }

@@ -1,5 +1,6 @@
 package com.example.storage.api.operations.importing;
 
+import com.example.storage.api.base.OperationResult;
 import lombok.*;
 
 import java.util.UUID;
@@ -9,7 +10,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ImportStorageResponse {
+public class ImportStorageResponse implements OperationResult {
     private UUID item_id;
     private Integer quantity;
 }
