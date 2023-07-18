@@ -3,12 +3,11 @@ package com.example.storage.core.processors;
 import com.example.storage.api.operations.importing.ImportStorageRequest;
 import com.example.storage.api.operations.importing.ImportStorageResponse;
 import com.example.storage.api.operations.importing.ImportStorageOperation;
+import com.example.storage.core.exceptions.ItemNotFoundInRepositoryException;
 import com.example.storage.persistence.entities.ItemStorage;
 import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -19,7 +18,8 @@ public class ImportStorageOperationProcessor implements ImportStorageOperation {
 
     @Override
     public ImportStorageResponse process(ImportStorageRequest importStorageRequest) {
-        ItemStorage foundInRepo = findById(importStorageRequest.getId());
+        ItemStorage foundInRepo = storageRepository.findById(importStorageRequest.getId())
+                .orElseThrow(ItemNotFoundInRepositoryException::new);
 
         foundInRepo.setQuantity(importStorageRequest.getQuantity() + foundInRepo.getQuantity());
 
@@ -29,10 +29,5 @@ public class ImportStorageOperationProcessor implements ImportStorageOperation {
                 .item_id(save.getId())
                 .quantity(save.getQuantity())
                 .build();
-    }
-
-    private ItemStorage findById(UUID id) {
-        return storageRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

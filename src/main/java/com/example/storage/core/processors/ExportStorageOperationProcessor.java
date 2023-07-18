@@ -3,6 +3,7 @@ package com.example.storage.core.processors;
 import com.example.storage.api.operations.export.ExportStorageRequest;
 import com.example.storage.api.operations.export.ExportStorageResponse;
 import com.example.storage.api.operations.export.ExportStorageOperation;
+import com.example.storage.core.exceptions.ItemNotFoundInRepositoryException;
 import com.example.storage.persistence.entities.ItemStorage;
 import com.example.storage.persistence.repositories.StorageRepository;
 import com.example.storage.core.exceptions.NotEnoughQuantityOfSelectedItemException;
@@ -20,7 +21,8 @@ public class ExportStorageOperationProcessor implements ExportStorageOperation {
 
     @Override
     public ExportStorageResponse process(ExportStorageRequest exportStorageRequest) {
-        ItemStorage foundInRepo = findById(exportStorageRequest.getId());
+        ItemStorage foundInRepo = storageRepository.findById(exportStorageRequest.getId())
+                .orElseThrow(ItemNotFoundInRepositoryException::new);
 
         if(foundInRepo.getQuantity() < exportStorageRequest.getQuantity()){
             throw new NotEnoughQuantityOfSelectedItemException();
@@ -34,9 +36,5 @@ public class ExportStorageOperationProcessor implements ExportStorageOperation {
                 .id(save.getId())
                 .quantity(save.getQuantity())
                 .build();
-    }
-
-    private ItemStorage findById(UUID id) {
-        return storageRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

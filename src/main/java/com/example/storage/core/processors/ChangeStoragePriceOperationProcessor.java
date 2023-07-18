@@ -3,6 +3,7 @@ package com.example.storage.core.processors;
 import com.example.storage.api.operations.change.price.ChangeStoragePriceRequest;
 import com.example.storage.api.operations.change.price.ChangeStoragePriceResponse;
 import com.example.storage.api.operations.change.price.ChangeStoragePriceOperation;
+import com.example.storage.core.exceptions.ItemNotFoundInRepositoryException;
 import com.example.storage.persistence.entities.ItemStorage;
 import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,8 @@ public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceO
 
     @Override
     public ChangeStoragePriceResponse process(ChangeStoragePriceRequest request) {
-        ItemStorage foundInRepo = findById(request.getId());
+        ItemStorage foundInRepo = storageRepository.findById(request.getId())
+                .orElseThrow(ItemNotFoundInRepositoryException::new);
 
         foundInRepo.setPrice(request.getPrice());
 
@@ -29,9 +31,5 @@ public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceO
                 .item_id(save.getItem_id())
                 .price(save.getPrice())
                 .build();
-    }
-
-    private ItemStorage findById(UUID id) {
-        return storageRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
