@@ -7,11 +7,7 @@ import com.example.storage.core.exceptions.ItemNotFoundInRepositoryException;
 import com.example.storage.persistence.entities.ItemStorage;
 import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service

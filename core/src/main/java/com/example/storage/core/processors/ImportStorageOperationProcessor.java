@@ -9,8 +9,6 @@ import com.example.storage.persistence.repositories.StorageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Service
 public class ImportStorageOperationProcessor implements ImportStorageOperation {
