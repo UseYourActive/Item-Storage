@@ -55,4 +55,6 @@ public class StorageController {
     public ResponseEntity<ChangeStoragePriceResponse> changePrice(@Valid @RequestBody ChangeStoragePriceRequest request){
         return new ResponseEntity<>(changeStoragePriceService.process(request), HttpStatus.ACCEPTED);
     }
+
+
 }

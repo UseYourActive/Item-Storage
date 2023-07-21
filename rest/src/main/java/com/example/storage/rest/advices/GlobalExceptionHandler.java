@@ -25,4 +25,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleItemNotFoundInRepositoryException(ItemNotFoundInRepositoryException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No item has been found in the repository! " + e.getMessage());
     }
+
+
 }

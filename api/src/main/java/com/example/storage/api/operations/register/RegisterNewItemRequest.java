@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class RegisterNewItemRequest implements OperationInput {
-    @NotNull(message = "Vendor UUID is required!")
+    @NotNull(message = "Item UUID is required!")
     private UUID id;
 
     @Positive
