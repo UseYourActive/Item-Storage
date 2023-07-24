@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example.storage</groupId>
   <artifactId>storage</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.6-SNAPSHOT</version>
   <packaging>pom</packaging>
   <licenses>
     <license>
@@ -29,7 +29,7 @@
     <dependency>
       <groupId>com.example.zoostore</groupId>
       <artifactId>restexport</artifactId>
-      <version>0.0.3-SNAPSHOT</version>
+      <version>0.0.4-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

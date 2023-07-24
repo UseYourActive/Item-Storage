@@ -3,6 +3,7 @@ package com.example.storage.core.processors;
 import com.example.storage.api.operations.register.RegisterNewItemRequest;
 import com.example.storage.api.operations.register.RegisterNewItemResponse;
 import com.example.storage.api.operations.register.RegisterNewItemOperation;
+import com.example.storage.core.exceptions.ItemNotFoundInRepositoryException;
 import com.example.storage.persistence.entities.ItemStorage;
 import com.example.storage.persistence.repositories.StorageRepository;
 import com.example.zoostore.restexport.ZooStoreRestClient;
@@ -18,9 +19,9 @@ public class RegisterNewItemOperationProcessor implements RegisterNewItemOperati
     @Override
     public RegisterNewItemResponse process(RegisterNewItemRequest registerNewItemRequest) {
         try {
-            zooStoreRestClient.getItemById(registerNewItemRequest.getId());
+            zooStoreRestClient.getItemById(registerNewItemRequest.getId().toString());
         }catch (Exception e){
-            throw new RuntimeException("Ne uspqh da namerq item s takova id v drugata baza");
+            throw new ItemNotFoundInRepositoryException("Ne uspqh da namerq item s takova id v drugata baza");
         }
 
         ItemStorage item = ItemStorage.builder()

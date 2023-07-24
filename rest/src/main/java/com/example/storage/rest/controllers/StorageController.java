@@ -51,7 +51,7 @@ public class StorageController {
 
     @Operation(description = "From the users request changes the price of a given item that already exists in the database.",
             summary = "Changes the price of an item.")
-    @PutMapping("/change-price")
+    @PatchMapping("/change-price")
     public ResponseEntity<ChangeStoragePriceResponse> changePrice(@Valid @RequestBody ChangeStoragePriceRequest request){
         return new ResponseEntity<>(changeStoragePriceService.process(request), HttpStatus.ACCEPTED);
     }
