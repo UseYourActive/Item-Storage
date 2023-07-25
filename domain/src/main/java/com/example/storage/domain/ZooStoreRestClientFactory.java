@@ -12,9 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 @Configuration
 public class ZooStoreRestClientFactory {
+    private final ObjectMapper objectMapper;
+
     @Bean
     ZooStoreRestClient getRestExportClient() {
-        final ObjectMapper objectMapper = new ObjectMapper();
         return Feign.builder()
                 .encoder(new JacksonEncoder(objectMapper))
                 .decoder(new JacksonDecoder(objectMapper))
