@@ -20,7 +20,7 @@ public class ItemStorage {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    private UUID item_id;
+    private UUID targetItem;
     private BigDecimal price;
     private Integer quantity;
 }

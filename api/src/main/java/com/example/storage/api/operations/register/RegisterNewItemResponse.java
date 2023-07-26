@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class RegisterNewItemResponse implements OperationResult {
+    private UUID id;
     private UUID item_id;
     private BigDecimal price;
     private Integer quantity;

@@ -6,6 +6,9 @@ import com.example.storage.api.operations.change.price.ChangeStoragePriceOperati
 import com.example.storage.api.operations.export.ExportStorageRequest;
 import com.example.storage.api.operations.export.ExportStorageResponse;
 import com.example.storage.api.operations.export.ExportStorageOperation;
+import com.example.storage.api.operations.findbyid.FindItemByIdOperation;
+import com.example.storage.api.operations.findbyid.FindItemByIdRequest;
+import com.example.storage.api.operations.findbyid.FindItemByIdResponse;
 import com.example.storage.api.operations.importing.ImportStorageRequest;
 import com.example.storage.api.operations.importing.ImportStorageResponse;
 import com.example.storage.api.operations.importing.ImportStorageOperation;
@@ -19,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/storage/item")
@@ -27,6 +32,7 @@ public class StorageController {
     private final ExportStorageOperation exportStorageService;
     private final RegisterNewItemOperation registerNewItemService;
     private final ChangeStoragePriceOperation changeStoragePriceService;
+    private final FindItemByIdOperation findItemByIdOperation;
 
     @Operation(description = "From the users request imports a given quantity to a given item that already exists in the database.",
             summary = "Imports a given quantity from an existing item.")
@@ -46,7 +52,7 @@ public class StorageController {
             summary = "Registers a new item.")
     @PostMapping("/register")
     public ResponseEntity<RegisterNewItemResponse> registerNewItem(@Valid @RequestBody RegisterNewItemRequest request){
-        return new ResponseEntity<>(registerNewItemService.process(request), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(registerNewItemService.process(request), HttpStatus.CREATED);
     }
 
     @Operation(description = "From the users request changes the price of a given item that already exists in the database.",
@@ -56,5 +62,9 @@ public class StorageController {
         return new ResponseEntity<>(changeStoragePriceService.process(request), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("find/{id}")
+    public ResponseEntity<FindItemByIdResponse> getItemByReferencedItemId(@PathVariable String id) {
+        return new ResponseEntity<>(findItemByIdOperation.process(FindItemByIdRequest.builder().id(UUID.fromString(id)).build()), HttpStatus.OK);
+    }
 
 }

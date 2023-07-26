@@ -24,7 +24,7 @@ public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceO
         ItemStorage save = storageRepository.save(foundInRepo);
 
         return ChangeStoragePriceResponse.builder()
-                .item_id(save.getItem_id())
+                .item_id(save.getTargetItem())
                 .price(save.getPrice())
                 .build();
     }

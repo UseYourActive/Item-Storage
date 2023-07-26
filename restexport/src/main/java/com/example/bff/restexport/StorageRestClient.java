@@ -7,6 +7,6 @@ import feign.RequestLine;
 
 @Headers({"Content-Type: application/json"})
 public interface StorageRestClient {
-    @RequestLine("GET /items/{id}")
+    @RequestLine("GET /storage/item/find/{id}")
     FindItemByIdResponse getItemById(@Param("id") String id);
 }

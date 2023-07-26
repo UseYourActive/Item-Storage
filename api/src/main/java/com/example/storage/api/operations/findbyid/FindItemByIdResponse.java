@@ -14,12 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FindItemByIdResponse implements OperationResult {
     private UUID id;
-    private String productName;
-    private String description;
-    private UUID vendor;
-    private Set<UUID> multimedia;
-    private Set<UUID> tags;
-    private boolean archived;
+    private UUID referencedItemId;
     private BigDecimal price;
     private Integer quantity;
 }

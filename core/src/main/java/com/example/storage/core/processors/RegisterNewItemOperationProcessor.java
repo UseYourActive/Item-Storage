@@ -25,7 +25,7 @@ public class RegisterNewItemOperationProcessor implements RegisterNewItemOperati
         }
 
         ItemStorage item = ItemStorage.builder()
-                .item_id(registerNewItemRequest.getId())
+                .targetItem(registerNewItemRequest.getId())
                 .price(registerNewItemRequest.getPrice())
                 .quantity(registerNewItemRequest.getQuantity())
                 .build();
@@ -33,7 +33,8 @@ public class RegisterNewItemOperationProcessor implements RegisterNewItemOperati
         ItemStorage save = storageRepository.save(item);
 
         return RegisterNewItemResponse.builder()
-                .item_id(save.getItem_id())
+                .id(save.getId())
+                .item_id(save.getTargetItem())
                 .quantity(save.getQuantity())
                 .price(save.getPrice())
                 .build();
