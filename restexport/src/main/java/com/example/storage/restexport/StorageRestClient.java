@@ -1,4 +1,4 @@
-package com.example.bff.restexport;
+package com.example.storage.restexport;
 
 import com.example.storage.api.operations.change.price.ChangeStoragePriceRequest;
 import com.example.storage.api.operations.change.price.ChangeStoragePriceResponse;
