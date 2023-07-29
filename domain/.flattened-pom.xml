@@ -13,6 +13,12 @@
   </licenses>
   <dependencies>
     <dependency>
+      <groupId>com.example.zoostore</groupId>
+      <artifactId>restexport</artifactId>
+      <version>0.0.4-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.28</version>
@@ -23,12 +29,6 @@
       <groupId>io.github.openfeign</groupId>
       <artifactId>feign-jackson</artifactId>
       <version>12.4</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.example.zoostore</groupId>
-      <artifactId>restexport</artifactId>
-      <version>0.0.4-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class ImportStorageOperationProcessor implements ImportStorageOperation {
+public class ImportStorageItemOperationProcessor implements ImportStorageOperation {
     private final StorageRepository storageRepository;
 
     @Override

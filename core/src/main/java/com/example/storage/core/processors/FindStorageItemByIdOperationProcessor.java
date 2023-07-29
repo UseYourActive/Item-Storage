@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class FindItemByIdOperationProcessor implements FindItemByIdOperation {
+public class FindStorageItemByIdOperationProcessor implements FindItemByIdOperation {
     private final StorageRepository storageRepository;
     @Override
     public FindItemByIdResponse process(FindItemByIdRequest findItemByIdRequest) {

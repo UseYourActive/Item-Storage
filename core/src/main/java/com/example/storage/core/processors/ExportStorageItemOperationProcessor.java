@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class ExportStorageOperationProcessor implements ExportStorageOperation {
+public class ExportStorageItemOperationProcessor implements ExportStorageOperation {
     private final StorageRepository storageRepository;
 
     @Override

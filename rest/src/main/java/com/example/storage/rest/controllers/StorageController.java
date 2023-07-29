@@ -6,6 +6,9 @@ import com.example.storage.api.operations.change.price.ChangeStoragePriceOperati
 import com.example.storage.api.operations.export.ExportStorageRequest;
 import com.example.storage.api.operations.export.ExportStorageResponse;
 import com.example.storage.api.operations.export.ExportStorageOperation;
+import com.example.storage.api.operations.findall.FindAllStorageItemOperation;
+import com.example.storage.api.operations.findall.FindAllStorageItemRequest;
+import com.example.storage.api.operations.findall.FindAllStorageItemResponse;
 import com.example.storage.api.operations.findbyid.FindItemByIdOperation;
 import com.example.storage.api.operations.findbyid.FindItemByIdRequest;
 import com.example.storage.api.operations.findbyid.FindItemByIdResponse;
@@ -26,14 +29,39 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/storage/item")
+@RequestMapping("/storage")
 public class StorageController {
     private final ImportStorageOperation importStorageService;
     private final ExportStorageOperation exportStorageService;
     private final RegisterNewItemOperation registerNewItemService;
     private final ChangeStoragePriceOperation changeStoragePriceService;
     private final FindItemByIdOperation findItemByIdOperation;
+    private final FindAllStorageItemOperation FindAllStorageItemOperation;
 
+    //region GET
+    @GetMapping("{id}")
+    public ResponseEntity<FindItemByIdResponse> getItemByReferencedItemId(@PathVariable String id) {
+        FindItemByIdRequest build = FindItemByIdRequest.builder().id(UUID.fromString(id)).build();
+        return new ResponseEntity<>(findItemByIdOperation.process(build), HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<FindAllStorageItemResponse> findAllStorageItems() {
+        FindAllStorageItemRequest build = FindAllStorageItemRequest.builder().build();
+        return new ResponseEntity<>(FindAllStorageItemOperation.process(build), HttpStatus.OK);
+    }
+    //endregion
+
+    //region POST
+    @Operation(description = "From the users request registers a new item that does not exist in the database yet.",
+            summary = "Registers a new item.")
+    @PostMapping("/register")
+    public ResponseEntity<RegisterNewItemResponse> registerNewItem(@Valid @RequestBody RegisterNewItemRequest request){
+        return new ResponseEntity<>(registerNewItemService.process(request), HttpStatus.CREATED);
+    }
+    //endregion
+
+    //region PUT/PATCH
     @Operation(description = "From the users request imports a given quantity to a given item that already exists in the database.",
             summary = "Imports a given quantity from an existing item.")
     @PatchMapping("/import")
@@ -48,13 +76,6 @@ public class StorageController {
         return new ResponseEntity<>(exportStorageService.process(request), HttpStatus.ACCEPTED);
     }
 
-    @Operation(description = "From the users request registers a new item that does not exist in the database yet.",
-            summary = "Registers a new item.")
-    @PostMapping("/register")
-    public ResponseEntity<RegisterNewItemResponse> registerNewItem(@Valid @RequestBody RegisterNewItemRequest request){
-        return new ResponseEntity<>(registerNewItemService.process(request), HttpStatus.CREATED);
-    }
-
     @Operation(description = "From the users request changes the price of a given item that already exists in the database.",
             summary = "Changes the price of an item.")
     @PatchMapping("/change-price")
@@ -62,9 +83,14 @@ public class StorageController {
         return new ResponseEntity<>(changeStoragePriceService.process(request), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("find/{id}")
-    public ResponseEntity<FindItemByIdResponse> getItemByReferencedItemId(@PathVariable String id) {
-        return new ResponseEntity<>(findItemByIdOperation.process(FindItemByIdRequest.builder().id(UUID.fromString(id)).build()), HttpStatus.OK);
-    }
+
+    //endregion
+
+    //region DELETE
+    //endregion
+
+
+
+
 
 }
