@@ -20,10 +20,6 @@ public class ExportStorageItemOperationProcessor implements ExportStorageOperati
         ItemStorage foundInRepo = storageRepository.findById(exportStorageRequest.getId())
                 .orElseThrow(ItemNotFoundInRepositoryException::new);
 
-        if(foundInRepo.getQuantity() < exportStorageRequest.getQuantity()){
-            throw new NotEnoughQuantityOfSelectedItemException();
-        }
-
         foundInRepo.setQuantity(foundInRepo.getQuantity() - exportStorageRequest.getQuantity());
 
         ItemStorage save = storageRepository.save(foundInRepo);
