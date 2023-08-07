@@ -3,6 +3,7 @@ package com.example.storage.api.operations.storageitem.find.all;
 import com.example.storage.api.base.OperationResult;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -11,5 +12,5 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class FindAllStorageItemResponse implements OperationResult {
-    private Set<FindAllStorageRepo> items;
+    private List<FindAllStorageRepo> items;
 }

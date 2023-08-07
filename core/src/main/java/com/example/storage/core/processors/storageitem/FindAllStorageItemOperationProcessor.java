@@ -22,7 +22,7 @@ public class FindAllStorageItemOperationProcessor implements FindAllStorageItemO
                 .items(storageRepository.findAll()
                         .stream()
                         .map(this::mapStorageItems)
-                        .collect(Collectors.toSet()))
+                        .toList())
                 .build();
     }
 

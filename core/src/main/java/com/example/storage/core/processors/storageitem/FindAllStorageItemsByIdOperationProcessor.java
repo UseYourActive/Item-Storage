@@ -30,7 +30,7 @@ public class FindAllStorageItemsByIdOperationProcessor implements FindAllStorage
         return FindAllStorageItemsByIdResponse.builder()
                 .items(storageItems.stream()
                         .map(this::mapStorageItems)
-                        .collect(Collectors.toSet()))
+                        .toList())
                 .build();
     }
 
