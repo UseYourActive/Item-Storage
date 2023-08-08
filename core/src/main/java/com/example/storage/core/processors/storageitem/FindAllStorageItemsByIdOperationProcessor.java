@@ -21,6 +21,12 @@ public class FindAllStorageItemsByIdOperationProcessor implements FindAllStorage
 
     @Override
     public FindAllStorageItemsByIdResponse process(FindAllStorageItemsByIdRequest findAllStorageItemsByIdRequest) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Set<StorageItem> storageItems = new HashSet<>(this.storageItemRepository.findAllById(findAllStorageItemsByIdRequest.getItemIds()));
 
         if(storageItems.size() != findAllStorageItemsByIdRequest.getItemIds().size()){
