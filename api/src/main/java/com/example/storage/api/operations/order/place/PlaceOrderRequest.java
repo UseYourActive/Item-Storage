@@ -4,6 +4,7 @@ import com.example.storage.api.base.OperationInput;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)
@@ -12,4 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PlaceOrderRequest implements OperationInput {
     private List<PlaceOrderInputCartItem> cartItems;
+    private UUID userId;
 }

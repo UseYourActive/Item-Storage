@@ -14,5 +14,4 @@ public class PlaceOrderInputCartItem {
     private UUID referencedItemId;
     private BigDecimal price;
     private Integer quantity;
-    private UUID userId;
 }
