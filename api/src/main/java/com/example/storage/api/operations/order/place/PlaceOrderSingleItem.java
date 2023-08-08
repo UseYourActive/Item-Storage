@@ -2,6 +2,7 @@ package com.example.storage.api.operations.order.place;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,10 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PlaceOrderSingleItem {
-    private UUID id;
     private UUID referencedItemId;
-    private Double price;
+    private BigDecimal price;
     private Integer quantity;
-    private LocalDateTime timestamp;
-    private UUID userId;
 }
