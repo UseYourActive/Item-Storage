@@ -53,16 +53,13 @@ public class PlaceOrderOperationProcessor implements PlaceOrderOperation {
         Order persistedOrder = this.orderRepository.save(order);
 
         return PlaceOrderResponse.builder()
-                .items(persistedOrder.getItems().stream().map(this::mapOrderItemToPlaceOrderResultSingleItem).toList())
+                .orders(persistedOrder.getItems().stream()
+                        .map(this::mapToPlaceOrderSingleItem)
+                        .toList())
                 .timestamp(persistedOrder.getTimestamp())
-                .user(persistedOrder.getUser())
-                .orderPrice(persistedOrder.getOrderPrice().doubleValue())
+                .userId(persistedOrder.getUser())
+                .orderPrice(persistedOrder.getOrderPrice())
                 .build();
-
-//        return new PlaceOrderResponse(placeOrderRequest.getCartItems().stream()
-//                .map(this::exportItem)
-//                .toList()
-//        );
     }
 
     private BigDecimal getItemPrice(OrderItem orderItem) {
@@ -102,46 +99,11 @@ public class PlaceOrderOperationProcessor implements PlaceOrderOperation {
                 .build();
     }
 
-    private PlaceOrderSingleItem mapToPlaceOrderSingleItem(OrderItem orderItem){
+    private PlaceOrderSingleItem mapToPlaceOrderSingleItem(OrderItem orderItem) {
         return PlaceOrderSingleItem.builder()
                 .referencedItemId(orderItem.getReferencedItemId())
                 .price(orderItem.getPrice())
                 .quantity(orderItem.getQuantity())
                 .build();
     }
-
-//    private PlaceOrderSingleItem exportItem(PlaceOrderInputCartItem cartItem) {
-//        StorageItem item = this.storageItemRepository
-//                .findById(cartItem.getReferencedItemId())
-//                .orElseThrow(ItemNotFoundInRepositoryException::new);
-//
-//        int quantityDifference = item.getQuantity() - cartItem.getQuantity();
-//
-//        if (quantityDifference < 0) {
-//            throw new NotEnoughQuantityOfSelectedItemException();
-//        }
-//
-//        item.setQuantity(quantityDifference);
-//
-//        StorageItem persistedStorageItem = this.storageItemRepository.save(item);
-//
-//        Order order = Order.builder()
-//                .referencedItemId(persistedStorageItem.getTargetItemId())
-//                .price(cartItem.getPrice())
-//                .quantity(cartItem.getQuantity())
-//                .timestamp(LocalDateTime.now(Clock.systemUTC()))
-//                //.user(cartItem.getUserId())
-//                .build();
-//
-//        Order persistedOrder = this.orderRepository.save(order);
-//
-//        return PlaceOrderSingleItem.builder()
-//                .id(persistedOrder.getId())
-//                .referencedItemId(persistedOrder.getReferencedItemId())
-//                .price(persistedOrder.getPrice().doubleValue())
-//                .quantity(persistedOrder.getQuantity())
-//                .timestamp(persistedOrder.getTimestamp())
-//                .userId(persistedOrder.getUser())
-//                .build();
-//    }
 }

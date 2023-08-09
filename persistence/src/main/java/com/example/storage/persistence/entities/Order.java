@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,30 +17,26 @@ import java.util.UUID;
 @Table(name = "orders")
 public class Order {
     @Builder
-    public Order(UUID referencedItemId, BigDecimal price, Integer quantity, LocalDateTime timestamp, UUID user) {
-        this.referencedItemId = referencedItemId;
-        this.price = price;
-        this.quantity = quantity;
+    public Order(Set<OrderItem> items, LocalDateTime timestamp, UUID user, BigDecimal orderPrice) {
+        this.items = items;
         this.timestamp = timestamp;
         this.user = user;
+        this.orderPrice = orderPrice;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private UUID referencedItemId;
-
-    @Column(nullable = false)
-    private BigDecimal price;
-
-    @Column(nullable = false)
-    private Integer quantity;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.PERSIST)
+    private Set<OrderItem> items;
 
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
     @Column(nullable = false)
     private UUID user;
+
+    @Column
+    private BigDecimal orderPrice;
 }
