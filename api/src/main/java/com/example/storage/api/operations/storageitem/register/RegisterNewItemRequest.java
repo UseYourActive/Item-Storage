@@ -19,7 +19,4 @@ public class RegisterNewItemRequest implements OperationInput {
 
     @Positive
     private BigDecimal price;
-
-    @Positive
-    private Integer quantity;
 }
