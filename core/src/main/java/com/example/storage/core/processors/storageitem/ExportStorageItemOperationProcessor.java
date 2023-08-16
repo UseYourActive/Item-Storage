@@ -2,8 +2,9 @@ package com.example.storage.core.processors.storageitem;
 
 import com.example.storage.api.operations.storageitem.export.ExportStorageRequest;
 import com.example.storage.api.operations.storageitem.export.ExportStorageResponse;
-import com.example.storage.api.operations.storageitem.export.ExportStorageOperation;
+import com.example.storage.api.operations.storageitem.export.ExportStorageItemOperation;
 import com.example.storage.core.exceptions.ItemNotFoundInRepositoryException;
+import com.example.storage.core.exceptions.StorageItemIllegalQuantityException;
 import com.example.storage.persistence.entities.StorageItem;
 import com.example.storage.persistence.repositories.StorageItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class ExportStorageItemOperationProcessor implements ExportStorageOperation {
+public class ExportStorageItemOperationProcessor implements ExportStorageItemOperation {
     private final StorageItemRepository storageRepository;
 
     @Override
@@ -20,6 +21,10 @@ public class ExportStorageItemOperationProcessor implements ExportStorageOperati
                 .orElseThrow(ItemNotFoundInRepositoryException::new);
 
         foundInRepo.setQuantity(foundInRepo.getQuantity() - exportStorageRequest.getQuantity());
+
+        if(foundInRepo.getQuantity() < 0){
+            throw new StorageItemIllegalQuantityException();
+        }
 
         StorageItem save = storageRepository.save(foundInRepo);
 

@@ -1,4 +1,4 @@
-package com.example.storage.api.operations.storageitem.find.allitemsbyid;
+package com.example.storage.api.operations.storageitem.sell;
 
 import com.example.storage.api.base.OperationInput;
 import lombok.*;
@@ -11,6 +11,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class FindAllStorageItemsByIdRequest implements OperationInput {
-    private List<UUID> itemIds;
+public class StorageItemsSellRequest implements OperationInput {
+    private UUID userId;
+
+    private List<ItemSellDataResponse> items;
 }
