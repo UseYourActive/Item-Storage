@@ -1,5 +1,5 @@
 FROM openjdk:17
 WORKDIR /Item-Storage
-COPY rest/target/tinqin-storage.jar zoo-storage.jar
+COPY rest/target/tinqin-storage.jar item-storage.jar
 EXPOSE 8082
-CMD ["java", "-jar", "zoo-storage.jar"]
+CMD ["java", "-jar", "item-storage.jar"]
