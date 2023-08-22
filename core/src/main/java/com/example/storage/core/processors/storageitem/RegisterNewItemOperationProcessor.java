@@ -18,6 +18,7 @@ public class RegisterNewItemOperationProcessor implements RegisterNewItemOperati
         StorageItem item = StorageItem.builder()
                 .targetItemId(registerNewItemRequest.getId())
                 .price(registerNewItemRequest.getPrice())
+                .quantity(0)
                 .build();
 
         StorageItem save = storageRepository.save(item);
