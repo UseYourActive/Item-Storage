@@ -30,6 +30,7 @@ import com.example.storage.api.operations.storageitem.remove.StorageItemRemoveRe
 import com.example.storage.api.operations.storageitem.sell.StorageItemsSellOperation;
 import com.example.storage.api.operations.storageitem.sell.StorageItemsSellRequest;
 import com.example.storage.api.operations.storageitem.sell.StorageItemsSellResponse;
+import com.tinqin.restexport.annotation.RestExport;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -38,7 +39,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,6 +59,7 @@ public class StorageController {
     private final CheckUserIfHasOrdersOperation checkUserIfHasOrdersOperation;
 
     //region GET
+    @RestExport
     @Operation(description = "By the users request by id finds an existing one in the database.",
             summary = "Finds an item by id.")
     @GetMapping(path ="{id}")
@@ -64,6 +68,7 @@ public class StorageController {
         return new ResponseEntity<>(findItemByIdOperation.process(build), HttpStatus.OK);
     }
 
+    @RestExport
     @Operation(description = "When pressed fetches all items from the database.",
             summary = "Finds all items in the database.")
     @GetMapping()
@@ -72,13 +77,20 @@ public class StorageController {
         return new ResponseEntity<>(FindAllStorageItemOperation.process(build), HttpStatus.OK);
     }
 
+    @RestExport
     @Operation(description = "By the given by a user Ids fetches them all if they do exist in the database.",
             summary = "Finds all items with the given ids.")
-    @GetMapping(path ="/find-all-by-id")
-    public ResponseEntity<FindAllStorageItemsByIdResponse> findAllStorageItemsById(@Valid FindAllStorageItemsByIdRequest request) {
-        return new ResponseEntity<>(findAllStorageItemsByIdOperation.process(request), HttpStatus.OK);
+    @GetMapping(path ="/find-all-by-id/{request}")
+    public ResponseEntity<FindAllStorageItemsByIdResponse> findAllStorageItemsById(@PathVariable List<String> request) {
+        FindAllStorageItemsByIdRequest build = FindAllStorageItemsByIdRequest.builder()
+                .itemIds(request.stream()
+                        .map(UUID::fromString)
+                        .toList())
+                .build();
+        return new ResponseEntity<>(findAllStorageItemsByIdOperation.process(build), HttpStatus.OK);
     }
 
+    @RestExport
     @Operation(description = "Checks if a provided with an id user in the database has any orders.",
             summary = "Check if user has orders.")
     @GetMapping(path ="/user/{userId}")
@@ -93,6 +105,7 @@ public class StorageController {
     //endregion
 
     //region POST
+    @RestExport
     @Operation(description = "From the users request registers a new item that does not exist in the database yet.",
             summary = "Registers a new item.")
     @PostMapping(path ="/register")
@@ -102,6 +115,7 @@ public class StorageController {
     //endregion
 
     //region PUT/PATCH
+    @RestExport
     @Operation(description = "From the users request imports a given quantity to a given item that already exists in the database.",
             summary = "Imports a given quantity from an existing item.")
     @PatchMapping(path ="/import")
@@ -109,6 +123,7 @@ public class StorageController {
         return new ResponseEntity<>(importStorageOperation.process(request), HttpStatus.ACCEPTED);
     }
 
+    @RestExport
     @Operation(description = "From the users request exports a given quantity to a given item that already exists in the database.",
             summary = "Exports a given quantity from an existing item.")
     @PatchMapping(path ="/export")
@@ -116,6 +131,7 @@ public class StorageController {
         return new ResponseEntity<>(exportStorageItemOperation.process(request), HttpStatus.ACCEPTED);
     }
 
+    @RestExport
     @Operation(description = "From the users request changes the price of a given item that already exists in the database.",
             summary = "Changes the price of an item.")
     @PatchMapping(path = "/change-price")
@@ -123,6 +139,7 @@ public class StorageController {
         return new ResponseEntity<>(changeStoragePriceOperation.process(request), HttpStatus.ACCEPTED);
     }
 
+    @RestExport
     @Operation(description = "From the users request sells a given by id item from the database.",
             summary = "Sells an item.")
     @Transactional
@@ -133,6 +150,7 @@ public class StorageController {
     //endregion
 
     //region DELETE
+    @RestExport
     @Operation(description = "From the users request removes an item from the database.",
             summary = "Removes an item.")
     @DeleteMapping(path ="/remove")

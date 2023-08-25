@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class FindAllStorageItemsByIdRequest implements OperationInput {
     private List<UUID> itemIds;
