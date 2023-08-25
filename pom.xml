@@ -16,6 +16,7 @@
     <description>storage</description>
     <properties>
         <zoostore.revision>0.0.4-SNAPSHOT</zoostore.revision>
+        <rest-export-revision>0.0.2-SNAPSHOT</rest-export-revision>
         <revision>0.0.6-SNAPSHOT</revision>
         <java.version>17</java.version>
     </properties>
@@ -78,6 +79,7 @@
         <module>rest</module>
         <module>persistence</module>
         <module>restexport</module>
+        <module>annotation-processor</module>
     </modules>
 
     <build>
