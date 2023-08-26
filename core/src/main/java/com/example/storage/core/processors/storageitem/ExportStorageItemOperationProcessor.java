@@ -8,25 +8,36 @@ import com.example.storage.core.exceptions.StorageItemIllegalQuantityException;
 import com.example.storage.persistence.entities.StorageItem;
 import com.example.storage.persistence.repositories.StorageItemRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class ExportStorageItemOperationProcessor implements ExportStorageItemOperation {
     private final StorageItemRepository storageRepository;
 
     @Override
     public ExportStorageResponse process(ExportStorageRequest exportStorageRequest) {
+        log.info("Processing ExportStorageRequest for storage item with ID: {}", exportStorageRequest.getId());
+
         StorageItem foundInRepo = storageRepository.findById(exportStorageRequest.getId())
                 .orElseThrow(ItemNotFoundInRepositoryException::new);
 
-        foundInRepo.setQuantity(foundInRepo.getQuantity() - exportStorageRequest.getQuantity());
+        Integer originalQuantity = foundInRepo.getQuantity();
+        Integer exportedQuantity = exportStorageRequest.getQuantity();
+        Integer newQuantity = originalQuantity - exportedQuantity;
+        log.info("Original quantity: {}, Exported quantity: {}, New quantity: {}", originalQuantity, exportedQuantity, newQuantity);
 
-        if(foundInRepo.getQuantity() < 0){
+        if (newQuantity < 0) {
+            log.warn("Storage item with ID {} has insufficient quantity for export.", exportStorageRequest.getId());
             throw new StorageItemIllegalQuantityException();
         }
 
+        foundInRepo.setQuantity(newQuantity);
+
         StorageItem save = storageRepository.save(foundInRepo);
+        log.info("Exported storage item with ID {}. New quantity: {}", save.getId(), save.getQuantity());
 
         return ExportStorageResponse.builder()
                 .id(save.getId())

@@ -5,19 +5,23 @@ import com.example.storage.api.operations.storageitem.checkifhasorders.CheckUser
 import com.example.storage.api.operations.storageitem.checkifhasorders.CheckUserIfHasOrdersResponse;
 import com.example.storage.persistence.repositories.SoldItemsHistoryRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class CheckUserIfHasOrdersOperationProcessor implements CheckUserIfHasOrdersOperation {
     private final SoldItemsHistoryRepository soldItemsHistoryRepository;
 
     @Override
     public CheckUserIfHasOrdersResponse process(CheckUserIfHasOrdersRequest checkUserIfHasOrdersRequest) {
-        Boolean hasOrders = this.soldItemsHistoryRepository.existsByUserId(checkUserIfHasOrdersRequest.getUserId());
+        log.info("Processing CheckUserIfHasOrdersRequest for user with ID: {}", checkUserIfHasOrdersRequest.getUserId());
 
-        return CheckUserIfHasOrdersResponse
-                .builder()
+        Boolean hasOrders = this.soldItemsHistoryRepository.existsByUserId(checkUserIfHasOrdersRequest.getUserId());
+        log.info("User with ID {} has orders: {}", checkUserIfHasOrdersRequest.getUserId(), hasOrders);
+
+        return CheckUserIfHasOrdersResponse.builder()
                 .hasOrders(hasOrders)
                 .build();
     }
