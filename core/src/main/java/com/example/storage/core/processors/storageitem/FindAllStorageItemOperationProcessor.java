@@ -19,7 +19,7 @@ public class FindAllStorageItemOperationProcessor implements FindAllStorageItemO
     private final StorageItemRepository storageRepository;
 
     @Override
-    public FindAllStorageItemResponse process(FindAllStorageItemRequest findAllStorageItemRequest) {
+    public FindAllStorageItemResponse process(final FindAllStorageItemRequest findAllStorageItemRequest) {
         log.info("Processing FindAllStorageItemRequest");
 
         List<FindAllStorageRepo> storageItems = storageRepository.findAll()
@@ -35,8 +35,8 @@ public class FindAllStorageItemOperationProcessor implements FindAllStorageItemO
 
     private FindAllStorageRepo mapStorageItems(StorageItem itemStorage){
         return FindAllStorageRepo.builder()
-                .id(itemStorage.getId())
-                .targetItem(itemStorage.getTargetItemId())
+                .id(String.valueOf(itemStorage.getId()))
+                .targetItem(String.valueOf(itemStorage.getTargetItemId()))
                 .price(itemStorage.getPrice())
                 .quantity(itemStorage.getQuantity())
                 .build();

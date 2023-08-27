@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -17,21 +19,21 @@ public class FindStorageItemByIdOperationProcessor implements FindItemByIdOperat
     private final StorageItemRepository storageRepository;
 
     @Override
-    public FindItemByIdResponse process(FindItemByIdRequest findItemByIdRequest) {
+    public FindItemByIdResponse process(final FindItemByIdRequest findItemByIdRequest) {
         log.info("Processing FindStorageItemByIdRequest");
 
-        StorageItem itemStorage = storageRepository.findById(findItemByIdRequest.getId())
+        StorageItem storageItem = this.storageRepository.findByTargetItemId(UUID.fromString(findItemByIdRequest.getId()))
                 .orElseThrow(() -> {
                     log.warn("Item not found in repository for id: {}", findItemByIdRequest.getId());
                     return new ItemNotFoundInRepositoryException();
                 });
-        log.info("Found storage item in the repository with id: {}", itemStorage.getId());
+        log.info("Found storage item in the repository with id: {}", storageItem.getId());
 
         return FindItemByIdResponse.builder()
-                .id(itemStorage.getId())
-                .referencedItemId(itemStorage.getTargetItemId())
-                .quantity(itemStorage.getQuantity())
-                .price(itemStorage.getPrice())
+                .id(String.valueOf(storageItem.getId()))
+                .referencedItemId(String.valueOf(storageItem.getTargetItemId()))
+                .quantity(storageItem.getQuantity())
+                .price(storageItem.getPrice())
                 .build();
     }
 }

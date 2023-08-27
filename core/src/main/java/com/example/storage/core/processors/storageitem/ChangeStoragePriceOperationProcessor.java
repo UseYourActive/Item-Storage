@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -17,10 +19,10 @@ public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceO
     private final StorageItemRepository storageRepository;
 
     @Override
-    public ChangeStoragePriceResponse process(ChangeStoragePriceRequest request) {
+    public ChangeStoragePriceResponse process(final ChangeStoragePriceRequest request) {
         log.info("Processing ChangeStoragePriceRequest for item with ID: {}", request.getId());
 
-        StorageItem foundInRepo = storageRepository.findById(request.getId())
+        StorageItem foundInRepo = storageRepository.findById(UUID.fromString(request.getId()))
                 .orElseThrow(() -> {
                     log.error("Item with ID {} not found in repository.", request.getId());
                     return new ItemNotFoundInRepositoryException();
@@ -32,8 +34,8 @@ public class ChangeStoragePriceOperationProcessor implements ChangeStoragePriceO
         log.info("StorageItem price changed successfully for item with ID: {}", save.getId());
 
         return ChangeStoragePriceResponse.builder()
-                .id(save.getId())
-                .targetItem(save.getTargetItemId())
+                .id(String.valueOf(save.getId()))
+                .targetItemId(String.valueOf(save.getTargetItemId()))
                 .price(save.getPrice())
                 .quantity(save.getQuantity())
                 .build();

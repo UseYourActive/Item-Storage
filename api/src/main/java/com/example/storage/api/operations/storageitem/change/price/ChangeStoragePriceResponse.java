@@ -12,8 +12,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class ChangeStoragePriceResponse implements OperationResult {
-    private UUID id;
-    private UUID targetItem;
+    private String id;
+    private String targetItemId;
     private BigDecimal price;
     private Integer quantity;
 }

@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -18,10 +20,10 @@ public class ExportStorageItemOperationProcessor implements ExportStorageItemOpe
     private final StorageItemRepository storageRepository;
 
     @Override
-    public ExportStorageResponse process(ExportStorageRequest exportStorageRequest) {
-        log.info("Processing ExportStorageRequest for storage item with ID: {}", exportStorageRequest.getId());
+    public ExportStorageResponse process(final ExportStorageRequest exportStorageRequest) {
+        log.info("Processing ExportStorageRequest for storage item with ID: {}", exportStorageRequest.getItemId());
 
-        StorageItem foundInRepo = storageRepository.findById(exportStorageRequest.getId())
+        StorageItem foundInRepo = storageRepository.findById(UUID.fromString(exportStorageRequest.getItemId()))
                 .orElseThrow(ItemNotFoundInRepositoryException::new);
 
         Integer originalQuantity = foundInRepo.getQuantity();
@@ -30,7 +32,7 @@ public class ExportStorageItemOperationProcessor implements ExportStorageItemOpe
         log.info("Original quantity: {}, Exported quantity: {}, New quantity: {}", originalQuantity, exportedQuantity, newQuantity);
 
         if (newQuantity < 0) {
-            log.warn("Storage item with ID {} has insufficient quantity for export.", exportStorageRequest.getId());
+            log.warn("Storage item with ID {} has insufficient quantity for export.", exportStorageRequest.getItemId());
             throw new StorageItemIllegalQuantityException();
         }
 
@@ -40,8 +42,8 @@ public class ExportStorageItemOperationProcessor implements ExportStorageItemOpe
         log.info("Exported storage item with ID {}. New quantity: {}", save.getId(), save.getQuantity());
 
         return ExportStorageResponse.builder()
-                .id(save.getId())
-                .targetItem(save.getTargetItemId())
+                .id(String.valueOf(save.getId()))
+                .targetItem(String.valueOf(save.getTargetItemId()))
                 .price(save.getPrice())
                 .quantity(save.getQuantity())
                 .build();

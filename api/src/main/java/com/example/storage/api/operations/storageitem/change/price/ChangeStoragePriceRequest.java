@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ChangeStoragePriceRequest implements OperationInput {
     @NotNull(message = "Vendor UUID is required!")
-    private UUID id;
+    private String id;
 
     @Positive
     private BigDecimal price;

@@ -11,5 +11,5 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class StorageItemRemoveRequest implements OperationInput {
-    private UUID id;
+    private String id;
 }

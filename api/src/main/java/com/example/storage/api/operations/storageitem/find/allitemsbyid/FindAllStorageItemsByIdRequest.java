@@ -12,5 +12,5 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FindAllStorageItemsByIdRequest implements OperationInput {
-    private List<UUID> itemIds;
+    private List<String> itemIds;
 }

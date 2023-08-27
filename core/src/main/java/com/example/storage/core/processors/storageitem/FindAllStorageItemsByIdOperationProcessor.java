@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,17 +21,14 @@ public class FindAllStorageItemsByIdOperationProcessor implements FindAllStorage
     private final StorageItemRepository storageItemRepository;
 
     @Override
-    public FindAllStorageItemsByIdResponse process(FindAllStorageItemsByIdRequest findAllStorageItemsByIdRequest) {
+    public FindAllStorageItemsByIdResponse process(final FindAllStorageItemsByIdRequest findAllStorageItemsByIdRequest) {
         log.info("Processing FindAllStorageItemsByIdRequest");
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            log.error("Thread interrupted during sleep: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        List<UUID> ids = findAllStorageItemsByIdRequest.getItemIds().stream()
+                .map(UUID::fromString)
+                .toList();
 
-        Set<StorageItem> storageItems = new HashSet<>(this.storageItemRepository.findAllById(findAllStorageItemsByIdRequest.getItemIds()));
+        List<StorageItem> storageItems = this.storageItemRepository.findByTargetItemIdIn(ids);
 
         if (storageItems.size() != findAllStorageItemsByIdRequest.getItemIds().size()) {
             log.warn("Not all item ids found in repository");
@@ -48,8 +45,8 @@ public class FindAllStorageItemsByIdOperationProcessor implements FindAllStorage
 
     private FindAllStorageItemsByIdInRepo mapStorageItems(StorageItem storageItem){
         return FindAllStorageItemsByIdInRepo.builder()
-                .id(storageItem.getId())
-                .referencedItemId(storageItem.getTargetItemId())
+                .id(String.valueOf(storageItem.getId()))
+                .referencedItemId(String.valueOf(storageItem.getTargetItemId()))
                 .price(storageItem.getPrice())
                 .quantity(storageItem.getQuantity())
                 .build();

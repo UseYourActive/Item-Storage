@@ -22,10 +22,10 @@ public class StorageItemsSellOperationProcessor implements StorageItemsSellOpera
     private final SoldItemsHistoryRepository soldItemsHistoryRepository;
 
     @Override
-    public StorageItemsSellResponse process(StorageItemsSellRequest storageItemsSellRequest) {
+    public StorageItemsSellResponse process(final StorageItemsSellRequest storageItemsSellRequest) {
         log.info("Processing StorageItemsSellRequest for user with id: {}", storageItemsSellRequest.getUserId());
 
-        UUID userId = storageItemsSellRequest.getUserId();
+        UUID userId = UUID.fromString(storageItemsSellRequest.getUserId());
 
         storageItemsSellRequest.getItems()
                 .forEach(item -> {
@@ -36,7 +36,7 @@ public class StorageItemsSellOperationProcessor implements StorageItemsSellOpera
             log.info("Processing item sale for item with id: {} for user with id: {}", itemId, userId);
 
             ExportStorageRequest itemExport = ExportStorageRequest.builder()
-                    .id(UUID.fromString(itemId))
+                    .itemId(itemId)
                     .quantity(quantity)
                     .build();
 

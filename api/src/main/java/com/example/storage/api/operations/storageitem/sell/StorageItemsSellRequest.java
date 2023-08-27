@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class StorageItemsSellRequest implements OperationInput {
-    private UUID userId;
+    private String userId;
 
     private List<ItemSellDataResponse> items;
 }

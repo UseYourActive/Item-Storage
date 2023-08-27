@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -17,10 +19,12 @@ public class StorageItemRemoveOperationProcessor implements StorageItemRemoveOpe
     private final StorageItemRepository storageItemRepository;
 
     @Override
-    public StorageItemRemoveResponse process(StorageItemRemoveRequest storageItemRemoveRequest) {
+    public StorageItemRemoveResponse process(final StorageItemRemoveRequest storageItemRemoveRequest) {
         log.info("Processing StorageItemRemoveRequest for item with id: {}", storageItemRemoveRequest.getId());
 
-        StorageItem storageItem = storageItemRepository.findById(storageItemRemoveRequest.getId())
+        String itemId = storageItemRemoveRequest.getId();
+
+        StorageItem storageItem = storageItemRepository.findById(UUID.fromString(storageItemRemoveRequest.getId()))
                 .orElseThrow(StorageItemNotFoundException::new);
         log.info("Removing storage item from the repository with id: {}", storageItem.getId());
 
@@ -28,7 +32,7 @@ public class StorageItemRemoveOperationProcessor implements StorageItemRemoveOpe
         log.info("Storage item removed successfully");
 
         return StorageItemRemoveResponse.builder()
-                .result("Successfully removed item!")
+                .result("Successfully removed item with id: " + itemId)
                 .build();
     }
 }

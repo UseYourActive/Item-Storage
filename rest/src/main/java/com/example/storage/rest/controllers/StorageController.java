@@ -39,7 +39,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,7 +61,7 @@ public class StorageController {
             summary = "Finds an item by id.")
     @GetMapping(path ="{id}")
     public ResponseEntity<FindItemByIdResponse> findItemById(@PathVariable String id) {
-        FindItemByIdRequest build = FindItemByIdRequest.builder().id(UUID.fromString(id)).build();
+        FindItemByIdRequest build = FindItemByIdRequest.builder().id(id).build();
         return new ResponseEntity<>(findItemByIdOperation.process(build), HttpStatus.OK);
     }
 
@@ -81,9 +80,7 @@ public class StorageController {
     @GetMapping(path ="/find-all-by-id/{request}")
     public ResponseEntity<FindAllStorageItemsByIdResponse> findAllStorageItemsById(@PathVariable List<String> request) {
         FindAllStorageItemsByIdRequest build = FindAllStorageItemsByIdRequest.builder()
-                .itemIds(request.stream()
-                        .map(UUID::fromString)
-                        .toList())
+                .itemIds(request)
                 .build();
         return new ResponseEntity<>(findAllStorageItemsByIdOperation.process(build), HttpStatus.OK);
     }
@@ -95,7 +92,7 @@ public class StorageController {
     public ResponseEntity<CheckUserIfHasOrdersResponse> checkIfUserHasOrders(@PathVariable String userId) {
         CheckUserIfHasOrdersRequest userRequest = CheckUserIfHasOrdersRequest
                 .builder()
-                .userId(UUID.fromString(userId))
+                .userId(userId)
                 .build();
 
         return new ResponseEntity<>(this.checkUserIfHasOrdersOperation.process(userRequest), HttpStatus.OK);
@@ -151,6 +148,7 @@ public class StorageController {
     //@RestExport
     @Operation(description = "From the users request removes an item from the database.",
             summary = "Removes an item.")
+    @Transactional
     @DeleteMapping(path ="/remove")
     public ResponseEntity<StorageItemRemoveResponse> removeStorageItem(@Valid @RequestBody StorageItemRemoveRequest storageItemRemoveRequest) {
         return new ResponseEntity<>(this.storageItemRemoveOperation.process(storageItemRemoveRequest), HttpStatus.OK);

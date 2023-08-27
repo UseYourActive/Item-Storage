@@ -19,22 +19,12 @@ public class SoldItemsHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    @Column(nullable = false)
     private UUID userId;
-
-    @Column(nullable = false)
     private UUID itemId;
+    private Integer quantity;
+    private BigDecimal price;
+    private BigDecimal priceWithDiscount;
 
     @CreationTimestamp
     private Timestamp date;
-
-    @Column(nullable = false)
-    private Integer quantity;
-
-    @Column(nullable = false)
-    private BigDecimal price;
-
-    @Column(nullable = false)
-    private BigDecimal priceWithDiscount;
 }

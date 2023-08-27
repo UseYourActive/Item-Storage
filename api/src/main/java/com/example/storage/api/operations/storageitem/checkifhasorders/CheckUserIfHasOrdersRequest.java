@@ -11,5 +11,5 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class CheckUserIfHasOrdersRequest implements OperationInput {
-    private UUID userId;
+    private String userId;
 }

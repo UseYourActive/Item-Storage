@@ -11,8 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class FindAllStorageItemsByIdInRepo {
-    private UUID id;
-    private UUID referencedItemId;
+    private String id;
+    private String referencedItemId;
     private BigDecimal price;
     private Integer quantity;
 }

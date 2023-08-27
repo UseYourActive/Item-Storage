@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ExportStorageRequest implements OperationInput {
     @NotNull(message = "Item UUID is required!")
-    private UUID id;
+    private String itemId;
 
     @Positive
     private Integer quantity;

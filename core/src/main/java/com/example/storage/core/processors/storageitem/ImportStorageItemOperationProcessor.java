@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -17,10 +19,10 @@ public class ImportStorageItemOperationProcessor implements ImportStorageOperati
     private final StorageItemRepository storageRepository;
 
     @Override
-    public ImportStorageResponse process(ImportStorageRequest importStorageRequest) {
+    public ImportStorageResponse process(final ImportStorageRequest importStorageRequest) {
         log.info("Processing ImportStorageRequest");
 
-        StorageItem foundInRepo = storageRepository.findById(importStorageRequest.getId())
+        StorageItem foundInRepo = storageRepository.findById(UUID.fromString(importStorageRequest.getId()))
                 .orElseThrow(() -> {
                     log.warn("Item not found in repository for id: {}", importStorageRequest.getId());
                     return new ItemNotFoundInRepositoryException();
@@ -33,8 +35,8 @@ public class ImportStorageItemOperationProcessor implements ImportStorageOperati
         log.info("Updated storage item in the repository with id: {}", save.getId());
 
         return ImportStorageResponse.builder()
-                .id(save.getId())
-                .targetItem(save.getId())
+                .id(String.valueOf(save.getId()))
+                .targetItem(String.valueOf(save.getId()))
                 .price(save.getPrice())
                 .quantity(save.getQuantity())
                 .build();

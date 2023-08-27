@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -15,10 +17,10 @@ public class CheckUserIfHasOrdersOperationProcessor implements CheckUserIfHasOrd
     private final SoldItemsHistoryRepository soldItemsHistoryRepository;
 
     @Override
-    public CheckUserIfHasOrdersResponse process(CheckUserIfHasOrdersRequest checkUserIfHasOrdersRequest) {
+    public CheckUserIfHasOrdersResponse process(final CheckUserIfHasOrdersRequest checkUserIfHasOrdersRequest) {
         log.info("Processing CheckUserIfHasOrdersRequest for user with ID: {}", checkUserIfHasOrdersRequest.getUserId());
 
-        Boolean hasOrders = this.soldItemsHistoryRepository.existsByUserId(checkUserIfHasOrdersRequest.getUserId());
+        Boolean hasOrders = this.soldItemsHistoryRepository.existsByUserId(UUID.fromString(checkUserIfHasOrdersRequest.getUserId()));
         log.info("User with ID {} has orders: {}", checkUserIfHasOrdersRequest.getUserId(), hasOrders);
 
         return CheckUserIfHasOrdersResponse.builder()
