@@ -11,12 +11,12 @@ import java.util.UUID;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class RegisterNewItemRequest implements OperationInput {
     @NotNull(message = "Item UUID is required!")
-    private String id;
+    private final String id;
 
     @Positive
-    private BigDecimal price;
+    private final BigDecimal price;
 }

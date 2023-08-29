@@ -12,12 +12,11 @@ import java.util.UUID;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class ChangeStoragePriceRequest implements OperationInput {
     @NotNull(message = "Vendor UUID is required!")
-    private String id;
+    private final String id;
 
     @Positive
-    private BigDecimal price;
+    private final BigDecimal price;
 }

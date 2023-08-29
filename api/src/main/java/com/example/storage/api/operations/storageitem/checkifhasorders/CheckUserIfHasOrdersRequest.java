@@ -8,8 +8,7 @@ import java.util.UUID;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class CheckUserIfHasOrdersRequest implements OperationInput {
-    private String userId;
+    private final String userId;
 }

@@ -11,12 +11,11 @@ import java.util.UUID;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class ExportStorageRequest implements OperationInput {
     @NotNull(message = "Item UUID is required!")
-    private String itemId;
+    private final String itemId;
 
     @Positive
-    private Integer quantity;
+    private final Integer quantity;
 }
